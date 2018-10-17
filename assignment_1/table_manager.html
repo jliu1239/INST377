@@ -5,6 +5,9 @@
 	div {
 		margin-bottom: 20px;
 	}
+    table, tr, td {
+        border: 1px solid black;
+    }
 </style>
 
 <!-- Data -->
@@ -204,9 +207,89 @@ var organizations = [
 
 <script>
 // outputs the first item of the organizations array. Just for testing.
-console.log(organizations[0]); 
+console.log(organizations[0]);
 
 // Your JavaScript code goes here
+
+//Functions to answer questions
+function numNonProfit(org) {
+    var count = 0;
+
+    for(var i = 0; i < org.length; i++) {
+        if (org[i]["Organization Type"] == "Nonprofit")
+            count++;
+    }
+    return count;
+}
+
+function lessThan10(org) {
+    var count = 0;
+
+    for(var i = 0; i < org.length; i++) {
+        if (org[i]["Founding Year"] > 2008)
+            count++;
+    }
+    return count;
+}
+
+function inNA(org) {
+    var count = 0;
+    var i
+
+    for(i = 0; i < org.length; i++) {
+        if (org[i]["Region"] == "North America")
+            count++;
+    }
+    return count;
+}
+
+function transportation(org) {
+    var count = 0;
+
+    for(var i = 0; i < org.length; i++) {
+        if (org[i]["Type of Data Used"] == "Transportation")
+            count++;
+    }
+    return count;
+}
+
+function naCity(org) {
+    var city = [];
+
+    for(var i = 0; i < org.length; i++) {
+        if (org[i]["Region"] == "North America")
+            city.push(org[i]["City"]);
+    }
+    return city.toString();
+}
+
+// Generates table
+var table_sum = document.getElementById("org_table");
+var tbl = document.createElement("table");
+for (var x = 0; x< 5; x++) {
+    var row = document.createElement("tr");
+
+    for(var y = 0; y < 2; y++){
+        var cell = document.createElement("td");
+        row.appendChild(cell);
+    }
+    tbl.appendChild(row);
+}
+
+// Fills table cells
+tbl.rows[0].cells[0].innerHTML = "How many non-profit organizations are listed?";
+tbl.rows[0].cells[1].innerHTML = numNonProfit(organizations);
+tbl.rows[1].cells[0].innerHTML = "How many organizations are less than 10 years old?";
+tbl.rows[1].cells[1].innerHTML = lessThan10(organizations);
+tbl.rows[2].cells[0].innerHTML = "How many of these organizations are North American?";
+tbl.rows[2].cells[1].innerHTML = inNA(organizations);
+tbl.rows[3].cells[0].innerHTML = "How many organizations used the Transportation type of data?";
+tbl.rows[3].cells[1].innerHTML = transportation(organizations);
+tbl.rows[4].cells[0].innerHTML = "If an organization is in North America, which cities are they in?";
+tbl.rows[4].cells[1].innerHTML = naCity(organizations);
+
+//Appends table to org_table in body
+table_sum.appendChild(tbl);
 
 
 </script>
